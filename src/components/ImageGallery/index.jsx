@@ -17,7 +17,11 @@ const ImageGallery = ({ images, uploadMoreImages, isUpdated }) => {
           ))
         }
       </ul>
-      <Button typeButton='load-button' textContent='Load more' onUpload={uploadMoreImages} isUpdated={isUpdated}/>
+      {
+        images.length > 0 && (
+          <Button typeButton='load-button' textContent='Load more' onUpload={uploadMoreImages} isUpdated={isUpdated}/>
+        )
+      }
     </div>
   )
 }

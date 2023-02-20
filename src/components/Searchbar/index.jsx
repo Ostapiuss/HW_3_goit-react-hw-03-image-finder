@@ -10,7 +10,9 @@ export class Searchbar extends React.Component {
   }
 
   onSubmit = () => {
-    this.props.getSearchData(this.state.searchText)
+    if (this.state.searchText) {
+      this.props.getSearchData(this.state.searchText)
+    }
   }
 
   onChange = (changeEvent) => {
@@ -25,7 +27,6 @@ export class Searchbar extends React.Component {
           <button type="button" className="SearchForm-button" onClick={this.onSubmit}>
             <SearchIcon className="SearchForm-icon" />
           </button>
-
           <input
             className="SearchForm-input"
             type="text"

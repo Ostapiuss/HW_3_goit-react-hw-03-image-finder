@@ -10,36 +10,29 @@ export class App extends React.Component {
     gallery: [],
     searchText: '',
     isUpdated: true,
-    perPage: 12,
+    perPage: 0,
   }
 
-  componentDidMount() {
-    this.setState({ isUpdated: false });
-    getImagesByCategory('', this.state.perPage).then((data) => {
-      this.setState({
-        gallery: data.hits,
-        isUpdated: true
-      })
-    });
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.perPage !== this.state.perPage) {
+      getImagesByCategory(this.state.searchText, this.state.perPage).then((data) => {
+        this.setState({
+          gallery: data.hits,
+          isUpdated: true,
+          perPage: this.state.perPage
+        })
+      });
+    }
   }
 
   getSearchData = (searchText) => {
-    this.setState({  searchText, perPage: 12 });
-    getImagesByCategory(searchText, 12).then((data) => {
-      this.setState({
-        gallery: data.hits,
-      })
-    });
+    this.setState({ searchText, perPage: 12 });
   }
 
   uploadMoreImages = () => {
     this.setState({ isUpdated: false });
-    getImagesByCategory(this.state.searchText, this.state.perPage + 12).then((data) => {
-      this.setState({
-        gallery: data.hits,
-        isUpdated: true,
-        perPage: this.state.perPage + 12
-      })
+    this.setState({
+      perPage: this.state.perPage + 12
     });
   }
 
